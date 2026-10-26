@@ -1,20 +1,22 @@
 import { useEffect, useState } from "react";
 import { Header } from "./components/Header";
+import { PriceList } from "./components/PriceList";
+import type { ApiResponse } from "./types";
 
 function App() {
-  const [updatedAt, setUpdatedAt] = useState<{
-    date: string;
-    time: string;
-  } | null>(null);
+  const [data, setData] = useState<ApiResponse | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await fetch("/api/data/live.json");
-        const data = await response.json();
-        setUpdatedAt({ date: data.date, time: data.time });
-        console.log(data);
+        const json = await response.json();
+        setData({
+          date: json.date,
+          time: json.time,
+          rates: json.rates,
+        });
       } catch (error) {
         setError(`خطا در دریافت اطلاعات : ${error}`);
       } finally {
@@ -37,12 +39,14 @@ function App() {
         {error}
       </div>
     );
-  if (!updatedAt) return null;
+  if (!data) return null;
+  console.log(data);
 
   return (
     <div className="min-h-screen bg-slate-50">
       <div className="container mx-auto px-4 py-6 max-w-7xl">
-        <Header date={updatedAt.date} time={updatedAt.time} />
+        <Header date={data.date} time={data.time} />
+        <PriceList rates={data.rates} />
       </div>
     </div>
   );

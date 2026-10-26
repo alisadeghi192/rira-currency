@@ -31,7 +31,7 @@ export function Header({date,time}:HeaderProps) {
         <img
           src={isDark ? "/icons/sun.svg" : "/icons/moon.svg"}
           alt="theme"
-          className="size-5 "
+          className="size-8"
         />
       </button>
     </header>
