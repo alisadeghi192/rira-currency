@@ -13,7 +13,7 @@ export function Header({ date, time }: HeaderProps) {
     text.replace(/\d/g, (d) => "۰۱۲۳۴۵۶۷۸۹"[Number(d)]);
   const isDark = theme === "dark";
   return (
-    <header className=" sticky top-0 z-10 bg-slate-100  py-3 md:py-5 mb-6 border-b border-slate-200">
+    <header className=" sticky top-0 z-10 bg-slate-100 py-3 md:py-5 border-b border-slate-200">
       <div
         className="container mx-auto px-4 flex items-center justify-between max-w-7xl"
       >

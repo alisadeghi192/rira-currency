@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Header } from "./components/Header";
 import { PriceList } from "./components/PriceList";
 import type { ApiResponse } from "./types";
+import { Converter } from "./components/Converter";
 
 function App() {
   const [data, setData] = useState<ApiResponse | null>(null);
@@ -50,7 +51,9 @@ function App() {
           <div className="w-full lg:w-1/2">
             <PriceList rates={data.rates} />
           </div>
-          <div className="w-full lg:w-1/2">مبدل</div>
+          <div className="w-full lg:sticky h-fit lg:top-27 lg:w-1/2">
+          <Converter/>
+          </div>
         </div>
       </div>
     </div>
