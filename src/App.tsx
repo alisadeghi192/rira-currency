@@ -43,10 +43,15 @@ function App() {
   console.log(data);
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen bg-slate-100">
+      <Header date={data.date} time={data.time} />
       <div className="container mx-auto px-4 py-6 max-w-7xl">
-        <Header date={data.date} time={data.time} />
-        <PriceList rates={data.rates} />
+        <div className="flex gap-8 flex-col-reverse lg:flex-row">
+          <div className="w-full lg:w-1/2">
+            <PriceList rates={data.rates} />
+          </div>
+          <div className="w-full lg:w-1/2">مبدل</div>
+        </div>
       </div>
     </div>
   );

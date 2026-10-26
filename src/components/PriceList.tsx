@@ -22,13 +22,13 @@ export function PriceList({ rates }: Props) {
         </div>
       </div>
 
-      <div className="grid grid-cols-4 gap-2">
+      <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 md:gap-4">
         {Object.entries(rates).map(([key, price]) => {
           if (!CURRENCY_NAMES[key]) return null;
 
           return (
-            <div key={key} className="flex items-center justify-between p-4 w-full bg-white rounded-xl shadow-sm border border-slate-200">
-              <div className="flex items-center gap-3 shrink-0">
+            <div key={key} className="flex items-center justify-between p-2 md:p-4 w-full bg-white rounded-xl shadow-sm border border-slate-200">
+              <div className="flex items-center gap-2 shrink-0">
                 <img
                   src={`/logos/${key}.png`}
                   alt={CURRENCY_NAMES[key]}
