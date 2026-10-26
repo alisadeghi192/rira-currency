@@ -1,18 +1,25 @@
 import { useState } from "react";
 
-type theme = "light" | "dark";
+type Theme = "light" | "dark";
 
-export function Header() {
-  const [theme, setTheme] = useState<theme>("light");
-  const isDark = theme === "dark"
+interface HeaderProps {
+  date: string;
+  time: string;
+}
+
+
+export function Header({date,time}:HeaderProps) {
+  const [theme, setTheme] = useState<Theme>("light");
+  const toPersianNumber = (text : string)=> text.replace((/\d/g) , d => '۰۱۲۳۴۵۶۷۸۹'[Number(d)])
+  const isDark = theme === "dark";
   return (
     <header className="flex items-center justify-between py-5 mb-6 border-b border-slate-200">
       <div className="flex items-center gap-3">
         <img src="/logo.png" alt="RIRA logo" className="size-12" />
         <div>
           <h1 className="text-xl font-bold text-indigo-600">ریرا ارز</h1>
-          <p className="text-sm text-slate-500 mt-0.5">
-            آخرین به‌روزرسانی: 1405/08/03 - 16:00
+          <p className="text-sm text-slate-600 mt-0.5">
+            آخرین به‌روزرسانی: {toPersianNumber(date)} - {toPersianNumber(time)}
           </p>
         </div>
       </div>
