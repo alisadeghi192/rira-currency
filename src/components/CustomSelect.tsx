@@ -26,7 +26,7 @@ function CustomSelect({ currencies, onChange, value }: CustomSelectProps) {
   return (
     <div className=" relative flex-1 max-w-56" ref={dropdownRef}>
       <button
-        className="flex items-center bg-white border border-slate-200 rounded-lg p-2 text-sm font-bold text-slate-700 outline-none shadow-md cursor-pointer justify-between w-full"
+        className="flex items-center bg-white border border-slate-200 rounded-lg p-2 text-sm font-bold text-slate-700  shadow-md cursor-pointer justify-between w-full hover:border-indigo-400 transition-colors"
         onClick={() => setIsOpen(!isOpen)}
       >
         <div className="flex items-center gap-2">
