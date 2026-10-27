@@ -3,12 +3,13 @@ import type { Rates } from "../types";
 
 interface Props {
   rates: Rates;
+  onSelect: (currency: keyof Rates) => void;
 }
 
-export function PriceList({ rates }: Props) {
+export function PriceList({ rates, onSelect }: Props) {
   return (
     <div>
-      <div className="mb-4">
+      <div className="flex flex-col gap-2 mb-4">
         <div className="flex items-center gap-1 text-sm text-slate-600">
           <img
             src="/icons/information-circle.svg"
@@ -20,6 +21,16 @@ export function PriceList({ rates }: Props) {
             است.
           </span>
         </div>
+        <div className="flex items-center gap-1 text-sm text-slate-600">
+          <img
+            src="/icons/information-circle.svg"
+            alt="info"
+            className="size-5 brightness-0 opacity-70"
+          />
+          <span>
+            برای تبدیل سریع، روی ارز مورد نظر خود کلیک کنید.
+          </span>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 md:gap-4">
@@ -27,12 +38,16 @@ export function PriceList({ rates }: Props) {
           if (!CURRENCY_NAMES[key]) return null;
 
           return (
-            <div key={key} className="flex items-center justify-between p-2 md:p-4 w-full bg-white rounded-xl shadow-sm border border-slate-200">
+            <div
+              key={key}
+              onClick={() => onSelect(key as keyof Rates)}
+              className="flex items-center justify-between p-2 md:p-4 w-full bg-white rounded-xl shadow-sm border border-slate-200 hover:border-indigo-400 hover:shadow-md cursor-pointer hover:bg-slate-50 transition-all group"
+            >
               <div className="flex items-center gap-2 shrink-0">
                 <img
                   src={`/logos/${key}.png`}
                   alt={CURRENCY_NAMES[key]}
-                  className="size-10"
+                  className="size-10 group-hover:scale-110 transition-transform"
                 />
                 <span>{CURRENCY_NAMES[key]}</span>
               </div>

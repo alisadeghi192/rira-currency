@@ -48,13 +48,23 @@ function App() {
       </div>
     );
   if (!data) return null;
+
+  const handleCurrencySelect = (currency: keyof Rates) => {
+    setFromCurrency(currency);
+    setToCurrency("IR");
+    setFromValue("1");
+    setToValue(String(data.rates[currency] / data.rates["IR"]));
+  };
+
+
+
   return (
     <div className="min-h-screen bg-slate-100">
       <Header date={data.date} time={data.time} />
       <div className="container mx-auto px-4 py-6 max-w-7xl">
         <div className="flex gap-8 flex-col-reverse lg:flex-row">
           <div className="w-full lg:w-1/2">
-            <PriceList rates={data.rates} />
+            <PriceList rates={data.rates}  onSelect={handleCurrencySelect}/>
           </div>
           <div className="w-full lg:sticky h-fit lg:top-27 lg:w-1/2">
             <Converter
