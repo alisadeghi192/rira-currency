@@ -1,22 +1,17 @@
-import { useState } from "react";
-
-type Theme = "light" | "dark";
-
+import { useTheme } from "../hooks/useTheme";
+import { toPersianNumber } from "../utils";
 interface HeaderProps {
   date: string;
   time: string;
 }
 
 export function Header({ date, time }: HeaderProps) {
-  const [theme, setTheme] = useState<Theme>("light");
-  const toPersianNumber = (text: string) =>
-    text.replace(/\d/g, (d) => "۰۱۲۳۴۵۶۷۸۹"[Number(d)]);
+  const { theme, toggleTheme } = useTheme();
   const isDark = theme === "dark";
+
   return (
     <header className=" sticky top-0 z-10 bg-slate-100 py-3 md:py-5 border-b border-slate-200">
-      <div
-        className="container mx-auto px-4 flex items-center justify-between max-w-7xl"
-      >
+      <div className="container mx-auto px-4 flex items-center justify-between max-w-7xl">
         <div className="flex items-center gap-3">
           <img src="/logo.png" alt="RIRA logo" className="size-12" />
           <div>
@@ -29,7 +24,7 @@ export function Header({ date, time }: HeaderProps) {
         </div>
 
         <button
-          onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+          onClick={toggleTheme}
           className="p-2 rounded-full bg-slate-100 text-slate-600 hover:bg-slate-200 transition shrink-0 cursor-pointer"
         >
           <img
