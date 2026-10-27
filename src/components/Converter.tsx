@@ -1,4 +1,4 @@
-import { CURRENCY_NAMES } from "../constants";
+import { CURRENCY_NAMES, CURRENCY_UNITS } from "../constants";
 import type { Rates } from "../types";
 import { cleanResult, formatDisplay, parseInput } from "../utils";
 import CustomSelect from "./CustomSelect";
@@ -76,9 +76,14 @@ export function Converter({
     setToValue(fromValue);
   };
 
+    const getCurrencyLabel = (key: keyof Rates) => {
+    const unit = CURRENCY_UNITS[key] || "";
+    return `${unit}${CURRENCY_NAMES[key]}`;
+  };
+
   return (
     <div className="bg-white  p-5 rounded-2xl shadow-sm border border-slate-200">
-      <div className="bg-slate-100 rounded-xl p-4 border flex flex-col gap-2 border-slate-100">
+      <div className="bg-slate-100 rounded-xl p-4 border flex flex-col gap-2 border-slate-200 focus-within:border-indigo-400 transition-colors">
         <div className="flex items-center gap-2">
           <span className=" text-slate-600">از</span>
 
@@ -94,7 +99,8 @@ export function Converter({
           type="text"
           inputMode="decimal"
           placeholder="0"
-          className="w-full bg-transparent text-3xl font-bold text-slate-800 outline-none text-left"
+          className="w-full overflow-hidden leading-none bg-transparent text-3xl font-bold text-slate-800 outline-none text-left"
+          dir="ltr"
         />
       </div>
 
@@ -107,7 +113,7 @@ export function Converter({
         </button>
       </div>
 
-      <div className="bg-slate-100 rounded-xl p-4 border flex flex-col gap-2 border-slate-100">
+      <div className="bg-slate-100 rounded-xl p-4 border flex flex-col gap-2 border-slate-200 focus-within:border-indigo-400 transition-colors">
         <div className="flex items-center gap-2">
           <span className=" text-slate-600">به</span>
           <CustomSelect
@@ -122,17 +128,18 @@ export function Converter({
           type="text"
           inputMode="decimal"
           placeholder="0"
-          className="w-full bg-transparent text-emerald-600 text-3xl font-bold outline-none text-left"
+          className="w-full overflow-hidden leading-none bg-transparent text-emerald-600 text-3xl font-bold outline-none text-left"
+          dir="ltr"
         />
       </div>
       {fromValue && toValue && (
         <div className="mt-5 p-3 bg-indigo-50 border border-indigo-100 rounded-xl text-center">
           <p className="text-sm text-indigo-700 font-medium">
             {Number(fromValue).toLocaleString("fa-IR")}{" "}
-            {CURRENCY_NAMES[fromCurrency]}
+            {getCurrencyLabel(fromCurrency)}
             <span className="mx-2 text-slate-400">=</span>
             {Number(toValue).toLocaleString("fa-IR")}{" "}
-            {CURRENCY_NAMES[toCurrency]}
+            {getCurrencyLabel(toCurrency)}
           </p>
         </div>
       )}

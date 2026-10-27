@@ -29,3 +29,9 @@ export const CURRENCY_NAMES: Record<string, string> = {
   silver: "نقره ۹۹۹",
   IR: "تومان"
 };
+
+export const CURRENCY_UNITS: Record<string, string> = {
+  gold: "گرم ",
+  gold24: "گرم ",
+  silver: "گرم ",
+};
