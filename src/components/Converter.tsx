@@ -30,7 +30,7 @@ export function Converter({
   const rateKeys = Object.keys(rates) as (keyof Rates)[];
 
   return (
-    <div className="bg-white p-5 rounded-2xl shadow-sm border border-slate-200">
+    <div className="bg-white dark:bg-slate-800 p-5 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700/50">
       <CurrencyInput
         label="از"
         value={fromValue}
@@ -38,12 +38,13 @@ export function Converter({
         currencies={rateKeys.filter((k) => k !== toCurrency)}
         onChangeValue={handleFromChange}
         onChangeCurrency={handleFromCurrencyChange}
+        textColor="text-slate-800 dark:text-white"
       />
 
       <div className="flex justify-center -my-3.5">
         <button
           onClick={handleSwap}
-          className="bg-indigo-600 hover:bg-indigo-700 text-white p-2.5 rounded-full shadow-lg border border-indigo-200 transition-transform hover:scale-110 cursor-pointer"
+          className="bg-indigo-600 hover:bg-indigo-700 text-white p-2.5 rounded-full shadow-lg border border-indigo-200 dark:border-indigo-900/50 transition-transform hover:scale-110 cursor-pointer"
         >
           <img src="/icons/arrows-up-down.svg" alt="⇅" className="size-5" />
         </button>
@@ -56,7 +57,7 @@ export function Converter({
         currencies={rateKeys.filter((k) => k !== fromCurrency)}
         onChangeValue={handleToChange}
         onChangeCurrency={handleToCurrencyChange}
-        textColor="text-emerald-600"
+        textColor="text-emerald-600 dark:text-emerald-400"
       />
 
       <ConversionSummary

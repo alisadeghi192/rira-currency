@@ -11,20 +11,20 @@ function App() {
 
   if (loading)
     return (
-      <div className="min-h-screen flex items-center justify-center bg-slate-50">
+      <div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200">
         در حال بارگذاری...
       </div>
     );
   if (error)
     return (
-      <div className="min-h-screen flex items-center justify-center bg-slate-50 text-red-500">
+      <div className="min-h-screen flex items-center justify-center bg-slate-50 text-red-500 dark:bg-slate-900">
         {error}
       </div>
     );
   if (!data) return null;
 
   return (
-    <div className="min-h-screen bg-slate-100">
+    <div className="min-h-screen bg-slate-100 dark:bg-slate-900">
       <Header date={data.date} time={data.time} />
       <div className="container mx-auto px-4 py-6 max-w-7xl">
         <div className="flex gap-8 flex-col-reverse lg:flex-row">

@@ -17,7 +17,7 @@ export function useRates() {
           rates: { ...json.rates, IR: 1 },
         });
       } catch (error) {
-        setError(`خطا در دریافت اطلاعات : ${error}`);
+        setError("خطا در دریافت اطلاعات ");
       } finally {
         setLoading(false);
       }
