@@ -27,4 +27,5 @@ export const CURRENCY_NAMES: Record<string, string> = {
   inr: "روپیه هند",
   mesghal: "مثقال طلا",
   silver: "نقره ۹۹۹",
+  IR: "تومان"
 };

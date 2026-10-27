@@ -8,6 +8,13 @@ function App() {
   const [data, setData] = useState<ApiResponse | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  const [fromCurrency, setFromCurrency] = useState("dollar");
+  const [toCurrency, setToCurrency] = useState("IR");
+
+  const [fromValue, setFromValue] = useState("");
+  const [toValue, setToValue] = useState("");
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -52,7 +59,17 @@ function App() {
             <PriceList rates={data.rates} />
           </div>
           <div className="w-full lg:sticky h-fit lg:top-27 lg:w-1/2">
-          <Converter/>
+            <Converter
+              rates={data.rates}
+              fromCurrency={fromCurrency}
+              setFromCurrency={setFromCurrency}
+              toCurrency={toCurrency}
+              setToCurrency={setToCurrency}
+              fromValue={fromValue}
+              setFromValue={setFromValue}
+              toValue={toValue}
+              setToValue={setToValue}
+            />
           </div>
         </div>
       </div>
