@@ -1,35 +1,13 @@
-import { useEffect, useState } from "react";
 import { Header } from "./components/Header";
 import { PriceList } from "./components/PriceList";
-import type { ApiResponse, Rates } from "./types";
+import type { Rates } from "./types";
 import { Converter } from "./components/Converter";
 import { useConverter } from "./hooks/useConverter";
+import { useRates } from "./hooks/useRates";
 
 function App() {
-  const [data, setData] = useState<ApiResponse | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const { data, loading, error } = useRates();
   const converter = useConverter(data?.rates || ({} as Rates));
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch("/api/data/live.json");
-        const json = await response.json();
-        setData({
-          date: json.date,
-          time: json.time,
-          rates: { ...json.rates, IR: 1 },
-        });
-      } catch (error) {
-        setError(`خطا در دریافت اطلاعات : ${error}`);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
 
   if (loading)
     return (
@@ -44,7 +22,6 @@ function App() {
       </div>
     );
   if (!data) return null;
-
 
   return (
     <div className="min-h-screen bg-slate-100">
