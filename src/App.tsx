@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Header } from "./components/Header";
 import { PriceList } from "./components/PriceList";
-import type { ApiResponse } from "./types";
+import type { ApiResponse , Rates } from "./types";
 import { Converter } from "./components/Converter";
 
 function App() {
@@ -9,8 +9,8 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const [fromCurrency, setFromCurrency] = useState("dollar");
-  const [toCurrency, setToCurrency] = useState("IR");
+  const [fromCurrency, setFromCurrency] = useState<keyof Rates>("dollar");
+  const [toCurrency, setToCurrency] = useState<keyof Rates>("IR");
 
   const [fromValue, setFromValue] = useState("");
   const [toValue, setToValue] = useState("");
@@ -23,7 +23,7 @@ function App() {
         setData({
           date: json.date,
           time: json.time,
-          rates: json.rates,
+          rates: {...json.rates , IR : 1},
         });
       } catch (error) {
         setError(`خطا در دریافت اطلاعات : ${error}`);
@@ -48,7 +48,6 @@ function App() {
       </div>
     );
   if (!data) return null;
-
   return (
     <div className="min-h-screen bg-slate-100">
       <Header date={data.date} time={data.time} />

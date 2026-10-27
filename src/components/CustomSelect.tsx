@@ -1,10 +1,11 @@
 import { useState ,useEffect , useRef } from "react";
 import { CURRENCY_NAMES } from "../constants";
+import type { Rates } from "../types";
 
 interface CustomSelectProps {
   value: string;
   currencies: string[];
-  onChange: (v: string) => void;
+  onChange: (v: keyof Rates) => void;
 }
 
 function CustomSelect({ currencies, onChange, value }: CustomSelectProps) {
@@ -40,7 +41,7 @@ function CustomSelect({ currencies, onChange, value }: CustomSelectProps) {
             <button
               key={key}
               onClick={() => {
-                onChange(key);
+                onChange(key as keyof Rates);
                 setIsOpen(false);
               }}
               type="button"

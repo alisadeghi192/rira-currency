@@ -27,6 +27,7 @@ export interface Rates {
   inr: number;
   mesghal: number;
   silver: number;
+  IR : number
 }
 
 export interface ApiResponse {
