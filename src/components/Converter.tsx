@@ -24,7 +24,7 @@ export function Converter({
   setToValue,
   rates,
 }: ConverterProps) {
-  const rateKeys = Object.keys(rates);
+  const rateKeys = Object.keys(rates) as (keyof Rates)[];
 
   const fromCurrencies = rateKeys.filter((key) => key !== toCurrency);
   const toCurrencies = rateKeys.filter((key) => key !== fromCurrency);
@@ -33,24 +33,40 @@ export function Converter({
   const toRate = rates[toCurrency];
 
   const rate = fromRate / toRate;
-  console.log(rate);
 
   const handleFromChange = (val: string) => {
-    setFromValue(val);
-    if (!val) {
+    const cleanValue = val.replace(/[^\d.]/g, "");
+    setFromValue(cleanValue);
+    if (!cleanValue) {
       setToValue("");
       return;
     }
-    setToValue(String(+val * rate));
+    setToValue(String((+cleanValue * rate).toFixed(2)));
   };
 
   const handleToChange = (val: string) => {
-    setToValue(val);
-    if (!val) {
+    const cleanValue = val.replace(/[^\d.]/g, "");
+
+    setToValue(cleanValue);
+    if (!cleanValue) {
       setFromValue("");
       return;
     }
-    setFromValue(String(+val / rate));
+    setFromValue(String(+cleanValue / rate));
+  };
+
+   const handleFromCurrencyChange = (c: keyof Rates) => {
+    setFromCurrency(c);
+    if (fromValue) {
+      setToValue(String((+fromValue * (rates[c] / toRate)).toFixed(2)));
+    }
+  };
+
+  const handleToCurrencyChange = (c: keyof Rates) => {
+    setToCurrency(c);
+    if (fromValue) {
+      setToValue(String((+fromValue * (fromRate / rates[c])).toFixed(2)));
+    }
   };
 
   const handleSwap = () => {
@@ -68,17 +84,17 @@ export function Converter({
 
           <CustomSelect
             currencies={fromCurrencies}
-            onChange={setFromCurrency}
+            onChange={handleFromCurrencyChange}
             value={fromCurrency}
           />
         </div>
         <input
-          value={fromValue}
-          onChange={(e) => handleFromChange(e.target.value)}
-          type="number"
+          value={fromValue ? Number(fromValue).toLocaleString("en-US") : ""}
+          onChange={(e) => handleFromChange(e.target.value.replace(/,/g, ""))}
+          type="text"
+          inputMode="decimal"
           placeholder="0"
-          className="w-full bg-transparent text-3xl  font-bold text-slate-800 outline-none text-left"
-          dir="ltr"
+          className="w-full bg-transparent text-3xl font-bold text-slate-800 outline-none text-left"
         />
       </div>
 
@@ -96,17 +112,17 @@ export function Converter({
           <span className=" text-slate-600">به</span>
           <CustomSelect
             currencies={toCurrencies}
-            onChange={setToCurrency}
+            onChange={handleToCurrencyChange}
             value={toCurrency}
           />
         </div>
         <input
-          value={toValue}
-          onChange={(e) => handleToChange(e.target.value)}
-          type="number"
+          value={toValue ? Number(toValue).toLocaleString("en-US") : ""}
+          onChange={(e) => handleToChange(e.target.value.replace(/,/g, ""))}
+          type="text"
+          inputMode="decimal"
           placeholder="0"
-          className="w-full bg-transparent text-3xl font-bold text-slate-800 outline-none text-left"
-          dir="ltr"
+          className="w-full bg-transparent text-emerald-600 text-3xl font-bold outline-none text-left"
         />
       </div>
       {fromValue && toValue && (

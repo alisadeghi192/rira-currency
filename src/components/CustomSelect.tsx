@@ -3,8 +3,8 @@ import { CURRENCY_NAMES } from "../constants";
 import type { Rates } from "../types";
 
 interface CustomSelectProps {
-  value: string;
-  currencies: string[];
+  value: keyof Rates;
+  currencies: (keyof Rates)[];
   onChange: (v: keyof Rates) => void;
 }
 
@@ -36,12 +36,12 @@ function CustomSelect({ currencies, onChange, value }: CustomSelectProps) {
         <img src="/icons/chevron-down.svg" alt="▼" className="size-4" />
       </button>
       {isOpen && (
-        <div className="absolute z-50 w-full mt-1 bg-white border-slate-200 rounded-lg shadow-xl overflow-y-auto max-h-60">
+        <div className="absolute border divide-y divide-slate-100 z-50 w-full mt-1 bg-white border-slate-200 rounded-lg shadow-xl overflow-y-auto max-h-60">
           {currencies.map((key) => (
             <button
               key={key}
               onClick={() => {
-                onChange(key as keyof Rates);
+                onChange(key);
                 setIsOpen(false);
               }}
               type="button"
