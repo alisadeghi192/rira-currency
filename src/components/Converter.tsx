@@ -1,5 +1,6 @@
 import { CURRENCY_NAMES } from "../constants";
 import type { Rates } from "../types";
+import { cleanResult, formatDisplay, parseInput } from "../utils";
 import CustomSelect from "./CustomSelect";
 interface ConverterProps {
   rates: Rates;
@@ -35,27 +36,26 @@ export function Converter({
   const rate = fromRate / toRate;
 
   const handleFromChange = (val: string) => {
-    const cleanValue = val.replace(/[^\d.]/g, "");
-    setFromValue(cleanValue);
-    if (!cleanValue) {
+    const parsed = parseInput(val);
+    setFromValue(parsed);
+    if (!parsed || parsed === ".") {
       setToValue("");
       return;
     }
-    setToValue(String((+cleanValue * rate).toFixed(2)));
+    setToValue(cleanResult(Number(parsed) * rate));
   };
 
   const handleToChange = (val: string) => {
-    const cleanValue = val.replace(/[^\d.]/g, "");
-
-    setToValue(cleanValue);
-    if (!cleanValue) {
+    const parsed = parseInput(val);
+    setToValue(parsed);
+    if (!parsed || parsed === ".") {
       setFromValue("");
       return;
     }
-    setFromValue(String(+cleanValue / rate));
+    setFromValue(cleanResult(Number(parsed) / rate));
   };
 
-   const handleFromCurrencyChange = (c: keyof Rates) => {
+  const handleFromCurrencyChange = (c: keyof Rates) => {
     setFromCurrency(c);
     if (fromValue) {
       setToValue(String((+fromValue * (rates[c] / toRate)).toFixed(2)));
@@ -89,8 +89,8 @@ export function Converter({
           />
         </div>
         <input
-          value={fromValue ? Number(fromValue).toLocaleString("en-US") : ""}
-          onChange={(e) => handleFromChange(e.target.value.replace(/,/g, ""))}
+          value={formatDisplay(fromValue)}
+          onChange={(e) => handleFromChange(e.target.value)}
           type="text"
           inputMode="decimal"
           placeholder="0"
@@ -117,8 +117,8 @@ export function Converter({
           />
         </div>
         <input
-          value={toValue ? Number(toValue).toLocaleString("en-US") : ""}
-          onChange={(e) => handleToChange(e.target.value.replace(/,/g, ""))}
+          value={formatDisplay(toValue)}
+          onChange={(e) => handleToChange(e.target.value)}
           type="text"
           inputMode="decimal"
           placeholder="0"
