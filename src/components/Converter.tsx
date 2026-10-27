@@ -1,3 +1,4 @@
+import { CURRENCY_NAMES } from "../constants";
 import type { Rates } from "../types";
 import CustomSelect from "./CustomSelect";
 interface ConverterProps {
@@ -32,7 +33,7 @@ export function Converter({
   const toRate = rates[toCurrency];
 
   const rate = fromRate / toRate;
-  console.log(rate)
+  console.log(rate);
 
   const handleFromChange = (val: string) => {
     setFromValue(val);
@@ -40,7 +41,7 @@ export function Converter({
       setToValue("");
       return;
     }
-    setToValue(String(+(val) * rate));
+    setToValue(String(+val * rate));
   };
 
   const handleToChange = (val: string) => {
@@ -49,7 +50,7 @@ export function Converter({
       setFromValue("");
       return;
     }
-    setFromValue(String(+(val) / rate));
+    setFromValue(String(+val / rate));
   };
 
   const handleSwap = () => {
@@ -108,6 +109,17 @@ export function Converter({
           dir="ltr"
         />
       </div>
+      {fromValue && toValue && (
+        <div className="mt-5 p-3 bg-indigo-50 border border-indigo-100 rounded-xl text-center">
+          <p className="text-sm text-indigo-700 font-medium">
+            {Number(fromValue).toLocaleString("fa-IR")}{" "}
+            {CURRENCY_NAMES[fromCurrency]}
+            <span className="mx-2 text-slate-400">=</span>
+            {Number(toValue).toLocaleString("fa-IR")}{" "}
+            {CURRENCY_NAMES[toCurrency]}
+          </p>
+        </div>
+      )}
     </div>
   );
 }
