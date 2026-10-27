@@ -32,14 +32,14 @@ export function useConverter(rates: Rates) {
     setFromValue(cleanResult(Number(parsed) / rate));
   };
 
-const handleFromCurrencyChange = (c: keyof Rates) => {
-  setFromCurrency(c);
-  if (fromValue) {
-    setToValue(cleanResult(+fromValue * (rates[c] / toRate)));
-  }
-};
+  const handleFromCurrencyChange = (c: keyof Rates) => {
+    setFromCurrency(c);
+    if (fromValue) {
+      setToValue(cleanResult(+fromValue * (rates[c] / toRate)));
+    }
+  };
 
-const handleToCurrencyChange = (c: keyof Rates) => {
+  const handleToCurrencyChange = (c: keyof Rates) => {
     setToCurrency(c);
     if (fromValue) {
       setToValue(cleanResult(+fromValue * (fromRate / rates[c])));
@@ -53,7 +53,7 @@ const handleToCurrencyChange = (c: keyof Rates) => {
     setToValue(fromValue);
   };
 
-    const selectCurrency = (currency: keyof Rates) => {
+  const selectCurrency = (currency: keyof Rates) => {
     setFromCurrency(currency);
     setToCurrency("IR");
     setFromValue("1");
@@ -70,6 +70,6 @@ const handleToCurrencyChange = (c: keyof Rates) => {
     handleFromCurrencyChange,
     handleToCurrencyChange,
     handleSwap,
-    selectCurrency
+    selectCurrency,
   };
 }
