@@ -27,15 +27,14 @@ export function PriceList({ rates, onSelect }: Props) {
             alt="info"
             className="size-5 brightness-0 opacity-70"
           />
-          <span>
-            برای تبدیل سریع، روی ارز مورد نظر خود کلیک کنید.
-          </span>
+          <span>برای تبدیل سریع، روی ارز مورد نظر خود کلیک کنید.</span>
         </div>
       </div>
 
       <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 md:gap-4">
         {Object.entries(rates).map(([key, price]) => {
           if (!CURRENCY_NAMES[key]) return null;
+          if (key === "IR" || !CURRENCY_NAMES[key]) return null;
 
           return (
             <div
