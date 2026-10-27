@@ -1,82 +1,37 @@
 import { CURRENCY_NAMES, CURRENCY_UNITS } from "../constants";
 import type { Rates } from "../types";
-import { cleanResult, formatDisplay, parseInput } from "../utils";
+import { formatDisplay } from "../utils";
 import CustomSelect from "./CustomSelect";
 interface ConverterProps {
   rates: Rates;
   fromCurrency: keyof Rates;
-  setFromCurrency: (c: keyof Rates) => void;
   toCurrency: keyof Rates;
-  setToCurrency: (c: keyof Rates) => void;
   fromValue: string;
-  setFromValue: (v: string) => void;
   toValue: string;
-  setToValue: (v: string) => void;
+  handleFromChange: (v: string) => void;
+  handleToChange: (v: string) => void;
+  handleFromCurrencyChange: (c: keyof Rates) => void;
+  handleToCurrencyChange: (c: keyof Rates) => void;
+  handleSwap: () => void;
 }
 
 export function Converter({
-  fromCurrency,
-  setFromCurrency,
-  toCurrency,
-  setToCurrency,
-  fromValue,
-  setFromValue,
-  toValue,
-  setToValue,
   rates,
+  fromCurrency,
+  toCurrency,
+  fromValue,
+  toValue,
+  handleFromChange,
+  handleToChange,
+  handleFromCurrencyChange,
+  handleToCurrencyChange,
+  handleSwap,
 }: ConverterProps) {
   const rateKeys = Object.keys(rates) as (keyof Rates)[];
-
   const fromCurrencies = rateKeys.filter((key) => key !== toCurrency);
   const toCurrencies = rateKeys.filter((key) => key !== fromCurrency);
 
-  const fromRate = rates[fromCurrency];
-  const toRate = rates[toCurrency];
-
-  const rate = fromRate / toRate;
-
-  const handleFromChange = (val: string) => {
-    const parsed = parseInput(val);
-    setFromValue(parsed);
-    if (!parsed || parsed === ".") {
-      setToValue("");
-      return;
-    }
-    setToValue(cleanResult(Number(parsed) * rate));
-  };
-
-  const handleToChange = (val: string) => {
-    const parsed = parseInput(val);
-    setToValue(parsed);
-    if (!parsed || parsed === ".") {
-      setFromValue("");
-      return;
-    }
-    setFromValue(cleanResult(Number(parsed) / rate));
-  };
-
-  const handleFromCurrencyChange = (c: keyof Rates) => {
-    setFromCurrency(c);
-    if (fromValue) {
-      setToValue(String((+fromValue * (rates[c] / toRate)).toFixed(2)));
-    }
-  };
-
-  const handleToCurrencyChange = (c: keyof Rates) => {
-    setToCurrency(c);
-    if (fromValue) {
-      setToValue(String((+fromValue * (fromRate / rates[c])).toFixed(2)));
-    }
-  };
-
-  const handleSwap = () => {
-    setFromCurrency(toCurrency);
-    setToCurrency(fromCurrency);
-    setFromValue(toValue);
-    setToValue(fromValue);
-  };
-
-    const getCurrencyLabel = (key: keyof Rates) => {
+  const getCurrencyLabel = (key: keyof Rates) => {
     const unit = CURRENCY_UNITS[key] || "";
     return `${unit}${CURRENCY_NAMES[key]}`;
   };
