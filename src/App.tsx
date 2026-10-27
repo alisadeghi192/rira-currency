@@ -48,7 +48,6 @@ function App() {
       </div>
     );
   if (!data) return null;
-  console.log(data);
 
   return (
     <div className="min-h-screen bg-slate-100">

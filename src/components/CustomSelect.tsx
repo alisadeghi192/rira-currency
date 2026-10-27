@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState ,useEffect , useRef } from "react";
 import { CURRENCY_NAMES } from "../constants";
 
 interface CustomSelectProps {
@@ -9,8 +9,21 @@ interface CustomSelectProps {
 
 function CustomSelect({ currencies, onChange, value }: CustomSelectProps) {
   const [isOpen, setIsOpen] = useState(false);
+
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   return (
-    <div className=" relative flex-1 max-w-56">
+    <div className=" relative flex-1 max-w-56" ref={dropdownRef}>
       <button
         className="flex items-center bg-white border border-slate-200 rounded-lg p-2 text-sm font-bold text-slate-700 outline-none shadow-md cursor-pointer justify-between w-full"
         onClick={() => setIsOpen(!isOpen)}
