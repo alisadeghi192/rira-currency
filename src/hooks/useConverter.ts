@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { Rates } from "../types";
 import { cleanResult, parseInput } from "../utils";
 
@@ -6,11 +6,17 @@ export function useConverter(rates: Rates) {
   const [fromCurrency, setFromCurrency] = useState<keyof Rates>("dollar");
   const [toCurrency, setToCurrency] = useState<keyof Rates>("IR");
 
-  const [fromValue, setFromValue] = useState("");
+  const [fromValue, setFromValue] = useState("1");
   const [toValue, setToValue] = useState("");
   const fromRate = rates[fromCurrency] || 1;
   const toRate = rates[toCurrency] || 1;
   const rate = fromRate / toRate;
+
+    useEffect(() => {
+    if (rates["dollar"] && rates["IR"]) {
+      setToValue(cleanResult(1 * (rates["dollar"] / rates["IR"])));
+    }
+  }, [rates]); 
 
   const handleFromChange = (val: string) => {
     const parsed = parseInput(val);
