@@ -31,7 +31,7 @@ As requested in the task, the goal was to build a **simple currency converter** 
 *   **Tech Stack:** Built with React, TypeScript, and Tailwind CSS for styling.
 *   **Clean Architecture:** Separating business logic into custom hooks (`useRates`, `useConverter`, `useTheme`) to keep UI components clean and focused.
 *   **Type Safety:** Using TypeScript with strict typing (e.g., `keyof Rates`) to prevent runtime errors.
-*   **Connecting to API:** Fetching live rates from the provided endpoint. Facing CORS restrictions was a challenge. I resolved this by using a **Vite Proxy** in development and **Vercel Rewrites** in production. *(Note: The API provides live data approximately from 11:00 AM to 8:00 PM Tehran Time).*
+*   **Connecting to API:** Fetching live rates from the provided endpoint ([nerkh.jahankhahan.shop](https://nerkh.jahankhahan.shop/)). Facing CORS restrictions was a challenge. I resolved this by using a **Vite Proxy** in development and **Vercel Rewrites** in production. *(Note: The API provides live data approximately from 11:00 AM to 8:00 PM Tehran Time).*
 *   **User Experience:** Fully responsive design (mobile-first). The app includes a Dark/Light theme toggle, custom dropdowns displaying currency logos, and smart number formatting for better readability.
 
 ---
