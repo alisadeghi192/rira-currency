@@ -12,11 +12,11 @@ export function useConverter(rates: Rates) {
   const toRate = rates[toCurrency] || 1;
   const rate = fromRate / toRate;
 
-    useEffect(() => {
+  useEffect(() => {
     if (rates["dollar"] && rates["IR"]) {
       setToValue(cleanResult(1 * (rates["dollar"] / rates["IR"])));
     }
-  }, [rates]); 
+  }, [rates]);
 
   const handleFromChange = (val: string) => {
     const parsed = parseInput(val);
@@ -41,14 +41,16 @@ export function useConverter(rates: Rates) {
   const handleFromCurrencyChange = (c: keyof Rates) => {
     setFromCurrency(c);
     if (fromValue) {
-      setToValue(cleanResult(+fromValue * (rates[c] / toRate)));
+      const newRate = (rates[c] || 1) / toRate;
+      setToValue(cleanResult(+fromValue * newRate));
     }
   };
 
   const handleToCurrencyChange = (c: keyof Rates) => {
     setToCurrency(c);
     if (fromValue) {
-      setToValue(cleanResult(+fromValue * (fromRate / rates[c])));
+      const newRate = fromRate / (rates[c] || 1);
+      setToValue(cleanResult(+fromValue * newRate));
     }
   };
 
