@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import type { Rates } from "../types";
-import { cleanResult, parseInput } from "../utils";
+import { cleanResult } from "../utils";
 
 export function useConverter(rates: Rates) {
   const [fromCurrency, setFromCurrency] = useState<keyof Rates>("dollar");
@@ -19,23 +19,21 @@ export function useConverter(rates: Rates) {
   }, [rates]);
 
   const handleFromChange = (val: string) => {
-    const parsed = parseInput(val);
-    setFromValue(parsed);
-    if (!parsed || parsed === ".") {
+    setFromValue(val);
+    if (!val  || val  === ".") {
       setToValue("");
       return;
     }
-    setToValue(cleanResult(Number(parsed) * rate));
+    setToValue(cleanResult(Number(val ) * rate));
   };
 
   const handleToChange = (val: string) => {
-    const parsed = parseInput(val);
-    setToValue(parsed);
-    if (!parsed || parsed === ".") {
+    setToValue(val);
+    if (!val || val === ".") {
       setFromValue("");
       return;
     }
-    setFromValue(cleanResult(Number(parsed) / rate));
+    setFromValue(cleanResult(Number(val) / rate));
   };
 
   const handleFromCurrencyChange = (c: keyof Rates) => {

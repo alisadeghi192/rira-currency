@@ -1,4 +1,4 @@
-import { formatDisplay } from "../utils";
+import { formatDisplay , parseInput } from "../utils";
 import CustomSelect from "./CustomSelect";
 import type { Rates } from "../types";
 
@@ -33,7 +33,7 @@ export function CurrencyInput({
       </div>
       <input
         value={formatDisplay(value)}
-        onChange={(e) => onChangeValue(e.target.value)}
+        onChange={(e) => onChangeValue(parseInput(e.target.value))}
         type="text"
         inputMode="decimal"
         placeholder="0"

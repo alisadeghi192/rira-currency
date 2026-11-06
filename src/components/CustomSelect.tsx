@@ -27,7 +27,6 @@ function CustomSelect({ currencies, onChange, value }: CustomSelectProps) {
 
   return (
     <div className="relative flex-1 max-w-56" ref={dropdownRef}>
-      {/* دکمه اصلی */}
       <button
         className="flex items-center bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2 text-sm font-bold text-slate-700 dark:text-slate-200 shadow-sm cursor-pointer justify-between w-full hover:border-indigo-400 dark:hover:border-indigo-500 transition-colors"
         onClick={() => setIsOpen(!isOpen)}
